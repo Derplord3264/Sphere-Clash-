@@ -3,7 +3,7 @@ let id;
 socket.on('id', i => (id = i));
 
 let [x, y, z] = [0, 0, 0];
-const me = new Player(0, 0, 0, 0xaaccff);
+const me = new Player(0, 0, 0, "transparent");
 
 let oof = new Audio("assets/die.wav");
 
@@ -27,6 +27,8 @@ scene.add(sun);
 window.onresize = function(){ location.reload(); }
 var menu = document.getElementById("menu");
 var health = document.getElementById("health-full");
+var coordinates = document.getElementById("coordinates");
+var kills = document.getElementById("kills");
 socket.on('players', data => {
   if(document.pointerLockElement === canvas ||
   document.mozPointerLockElement === canvas) {
@@ -46,6 +48,8 @@ socket.on('players', data => {
 			camera.position.set(x, y, z);
 			me.mesh.position.set(x, y, z);
 			me.updateHealth(p.hp, p.score, x, y, z);
+      coordinates.innerHTML = String(Math.floor(x)) + ", " + String(Math.floor(z)) + ", " +String(Math.floor(y));
+      kills.innerHTML = p.score;
       health.style.width = (p.hp / 2.5) + "%";
 		} else if (!players[p.id]) {
 			players[p.id] = new Player(p.x, p.y, p.z, 0xff7777);
@@ -83,7 +87,23 @@ socket.on('players', data => {
 	}
 });
 
-socket.on("oof", function(){
+function dist(x1, x2, y1, y2, z1, z2) {
+  var a = x1 - x2;
+  var b = y1 - y2;
+  var c = z1 - z2;
+  return Math.sqrt(a*a+b*b+c*c);
+}
+
+function getDistance(mesh2, mesh1) { 
+  var dx = mesh2.x - mesh1.mesh.position.x; 
+  var dy = mesh2.y - mesh1.mesh.position.z; 
+  var dz = mesh2.z - mesh1.mesh.position.y; 
+
+  return Math.sqrt(dx*dx+dy*dy+dz*dz); 
+}
+
+socket.on("oof", data => {
+  console.log(getDistance(data, me));
   oof.play();
 });
 

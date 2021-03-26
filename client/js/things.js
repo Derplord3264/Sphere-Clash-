@@ -39,7 +39,7 @@ class Player {
 	constructor(x, y, z, color) {
 		this.mesh = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 100, 100),
-      new THREE.MeshPhongMaterial({color: color, shininess: 50, specular: 0xffffff, emissive: 0x0})
+      new THREE.MeshPhongMaterial({color: color, shininess: 25, specular: 0xffffff, emissive: 0x0, roughness: 10})
 		);
 
 		this.mesh.castShadow = true;

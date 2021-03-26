@@ -49,7 +49,7 @@ class Player {
     this.score = 0;
 	}
 	reSpawn() {
-		[this.x, this.y, this.z] = [0, 0, 1];
+		[this.x, this.y, this.z] = [Math.floor((Math.random() * 250) - 124), Math.floor((Math.random() * 250) - 124), 500];
 		[this.sx, this.sy, this.sz] = [0, 0, 0];
     this.hp = 100;
     this.score = 0;

@@ -26,7 +26,7 @@ for (const f of map.data) floors.push(new Floor(f[0], f[1], f[2], f[3], f[4], f[
 
 io.on('connection', socket => {
 	const id = socket.id;
-	players[id] = new Player(0, 0, 1, 1);
+	players[id] = new Player(Math.floor((Math.random() * 250) - 124), Math.floor((Math.random() * 250) - 124), 500, 1);
 	const p = players[id];
 	socket.emit('id', socket.id);
 	socket.emit('floors', floors);
@@ -34,7 +34,7 @@ io.on('connection', socket => {
 		const x = Math.sin(data.angle) * data.speed;
 		const y = Math.cos(data.angle) * data.speed;
 		if (p.landed && data.jump) {
-			p.sz += 0.75;
+			p.sz += 0.5;
 			p.landed = false;
 		}
 
@@ -53,9 +53,9 @@ io.on('connection', socket => {
 
 		b.sx = Math.sin(a.z) * 1;
 		b.sy = Math.cos(a.z) * 1;
-		b.sz = 0 - Math.cos(a.x);
+		b.sz = 0 - Math.cos(a.x) * 1;
     p.ready = false;
-    setTimeout(() => p.ready = true, 250);
+    setTimeout(() => p.ready = true, 50);
 	});
 
 	socket.on('disconnect', () => {
@@ -67,13 +67,13 @@ function update() {
 	for (const i in players) {
 		const p = players[i];
 
-		p.x += p.sx;
-		p.y += p.sy;
-		p.z += p.sz;
+		p.x += p.sx / 5;
+		p.y += p.sy / 5;
+		p.z += p.sz / 3;
 
 		if (p.z < -50) {
 		  p.reSpawn();
-		  io.emit("oof");
+		  io.emit("oof", p);
 		}
 		let landed = false;
 		for (const f of floors) {
@@ -83,7 +83,7 @@ function update() {
 			}
 		}
 		p.landed = landed;
-		if (!p.landed) p.sz -= 0.05;
+		if (!p.landed) p.sz -= 0.0075;
 		else p.sz = 0;
 
 		for (const i in p.bullets) {
@@ -103,7 +103,8 @@ function update() {
           
           if(target.hp <= 0) {
             target.reSpawn();
-            io.emit("oof");
+            io.emit("oof", target);
+            console.log(p);
             p.score++;
           }
           break;
@@ -139,6 +140,6 @@ function send(){
 setInterval(() => {
 	update();
 	send();
-}, 1000 / 60);
+}, 1000 / 300);
 
 

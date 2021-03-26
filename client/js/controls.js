@@ -91,7 +91,6 @@ function push() {
   } else {
     var speed = 0.3;
   }
-  console.log(speed);
   if (keystate[87]) y++;
   if (keystate[65]) x--;
   if (keystate[83]) y--;
@@ -130,7 +129,6 @@ document.getElementById("Settingsbutton").addEventListener('click', e => {
 canvas.addEventListener('click', e => {
   e.preventDefault();
   var button = e.button;
-  console.log(button);
   if(button == 0) {
     socket.emit('shoot', angle);
   }

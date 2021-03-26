@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="assets/style/style.css">
   </head>
   <body>
+    <canvas id="gc"></canvas>
     <div id="menu"><h1>Cubic War</h1><button id="Playbutton">Play!</button><br><br><button id="Settingsbutton">Settings</button></div>
     <div id="health"></div>
     <div id="health-full"></div>
-    <canvas id="gc"></canvas>
+    <div id="coordinates">0, 0, 0</div>
+    <div id="kills">0</div>
     <img src="assets/crosshair.png" id="crosshair">
     <script src="socket.io/socket.io.js"></script>
     <script src="js/cookie.js"></script>
