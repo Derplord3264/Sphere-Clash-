@@ -33,8 +33,10 @@ socket.on('players', data => {
   if(document.pointerLockElement === canvas ||
   document.mozPointerLockElement === canvas) {
       menu.style.display = "none";
+      lockedcontrols = false;
   } else {
       menu.style.display = "block";
+      lockedcontrols = true;
   }
 	let notUpdated = [];
 	for (let i in players) notUpdated.push(i);

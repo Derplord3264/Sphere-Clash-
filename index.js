@@ -5,7 +5,7 @@ const serv = require('http').Server(app);
 app.use('/', express.static(__dirname + '/client/'));
 
 serv.listen(8080);
-console.log('Server started.');
+console.log('Ready to go!');
 
 const io = require('socket.io')(serv);
 
@@ -104,7 +104,6 @@ function update() {
           if(target.hp <= 0) {
             target.reSpawn();
             io.emit("oof", target);
-            console.log(p);
             p.score++;
           }
           break;
