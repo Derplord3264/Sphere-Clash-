@@ -100,10 +100,12 @@ function push() {
     if (keystate[32]) jump = true;
     if (keystate[81]) {
       aim = true;
-      document.body.style.transform = "scale(5)";
+      camera.fov = 9;
+			camera.updateProjectionMatrix();
     }else if (!keystate[81]) {
       aim = false;
-      document.body.style.transform = "scale(1)";  
+      camera.fov = 60;
+			camera.updateProjectionMatrix();
     }
   }
   if (!x && !y) speed = 0;
@@ -142,8 +144,8 @@ document.addEventListener('mousemove', e => {
   e.preventDefault();
   if(!lockedcontrols) {
     if(aim) {
-      angle.z += e.movementX / (sensitivity * 50);
-      angle.x -= e.movementY / (sensitivity * 50);    
+      angle.z += e.movementX / (sensitivity * 75);
+      angle.x -= e.movementY / (sensitivity * 75);    
     } else {
       angle.z += e.movementX / (sensitivity * 10);
       angle.x -= e.movementY / (sensitivity * 10);

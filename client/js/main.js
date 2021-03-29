@@ -51,7 +51,11 @@ socket.on('players', data => {
 			me.mesh.position.set(x, y, z);
 			me.updateHealth(p.hp, p.score, x, y, z);
       coordinates.innerHTML = String(Math.floor(x)) + ", " + String(Math.floor(z)) + ", " +String(Math.floor(y));
-      kills.innerHTML = p.score;
+			if(p.score == 1) {
+      	kills.innerHTML = p.score + " kill";
+			} else {
+				kills.innerHTML = p.score + " kills";
+			}
       health.style.width = (p.hp / 2.5) + "%";
 		} else if (!players[p.id]) {
 			players[p.id] = new Player(p.x, p.y, p.z, 0xff7777);

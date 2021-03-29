@@ -15,17 +15,18 @@ if(Cookies.get("shadowresolution") == undefined) {
 } else {
   shadowresolution = parseInt(Cookies.get("shadowresolution"));
 }
-renderer.setPixelRatio((window.devicePixelRatio / 50) * resolution);
+renderer.setPixelRatio((window.devicePixelRatio/100) * resolution);
 renderer.setClearColor(0x00bfff);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 document.body.appendChild(renderer.domElement);
 
 
 camera.position.set(0, -5, 0);
 camera.rotation.x = Math.PI / 2;
-
+camera.fov = 60;
+camera.updateProjectionMatrix();
 const light = new THREE.AmbientLight("#ffffee");
 scene.add(light);
 const shadowLight = new THREE.PointLight(0x333333, 1.2, 1000);
