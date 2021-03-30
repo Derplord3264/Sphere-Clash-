@@ -5,7 +5,7 @@ const serv = require('http').Server(app);
 app.use('/', express.static(__dirname + '/client/'));
 
 serv.listen(8080);
-console.log('Ready to go!');
+console.log('Server started.');
 
 const io = require('socket.io')(serv);
 
@@ -51,8 +51,8 @@ io.on('connection', socket => {
 		const b = new Bullet(p.x, p.y, p.z);
 		p.bullets.push(b);
 
-		b.sx = Math.sin(a.z) * 1;
-		b.sy = Math.cos(a.z) * 1;
+		b.sx = Math.sin(a.z) * Math.sin(a.x);
+		b.sy = Math.cos(a.z) * Math.sin(a.x);
 		b.sz = 0 - Math.cos(a.x) * 1;
     p.ready = false;
     setTimeout(() => p.ready = true, 50);
@@ -104,6 +104,7 @@ function update() {
           if(target.hp <= 0) {
             target.reSpawn();
             io.emit("oof", target);
+            console.log(p);
             p.score++;
           }
           break;

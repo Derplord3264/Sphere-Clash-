@@ -2,7 +2,6 @@ const keystate = [];
 const angle = { z: 0, x: Math.PI / 2 };
 var sensitivity = 50;
 var aim = false;
-var lockedcontrols = true;
 window.addEventListener('keydown', e => {
   e.preventDefault();
   if (!keystate[e.keyCode]) {
@@ -92,22 +91,23 @@ function push() {
   } else {
     var speed = 0.3;
   }
-  if(!lockedcontrols) {
-    if (keystate[87]) y++;
-    if (keystate[65]) x--;
-    if (keystate[83]) y--;
-    if (keystate[68]) x++;
-    if (keystate[32]) jump = true;
-    if (keystate[81]) {
-      aim = true;
-      camera.fov = 9;
+	if(!lock) {
+		if (keystate[87]) y++;
+		if (keystate[65]) x--;
+		if (keystate[83]) y--;
+		if (keystate[68]) x++;
+		if (keystate[32]) jump = true;
+		if (keystate[81] && !aim) {
+			aim = true;
+			camera.fov = 9;
 			camera.updateProjectionMatrix();
-    }else if (!keystate[81]) {
-      aim = false;
-      camera.fov = 60;
+		}else if (!keystate[81] && aim) {
+			aim = false;
+			camera.fov = 60;
 			camera.updateProjectionMatrix();
-    }
-  }
+		}
+
+	}
   if (!x && !y) speed = 0;
 
   let moveAngle = Math.atan(x / y);
@@ -142,15 +142,15 @@ canvas.addEventListener('click', e => {
 
 document.addEventListener('mousemove', e => {
   e.preventDefault();
-  if(!lockedcontrols) {
-    if(aim) {
-      angle.z += e.movementX / (sensitivity * 75);
-      angle.x -= e.movementY / (sensitivity * 75);    
-    } else {
-      angle.z += e.movementX / (sensitivity * 10);
-      angle.x -= e.movementY / (sensitivity * 10);
-    }
-  }
+	if(!lock) {
+		if(aim) {
+			angle.z += e.movementX / (sensitivity * 50);
+			angle.x -= e.movementY / (sensitivity * 50);    
+		} else {
+			angle.z += e.movementX / (sensitivity * 10);
+			angle.x -= e.movementY / (sensitivity * 10);
+  	}
+	}
   socket.emit('angle', angle.z);
   if (angle.x < 0) angle.x = 0;
   if (angle.x > Math.PI) angle.x = Math.PI;

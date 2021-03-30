@@ -33,10 +33,10 @@ socket.on('players', data => {
   if(document.pointerLockElement === canvas ||
   document.mozPointerLockElement === canvas) {
       menu.style.display = "none";
-      lockedcontrols = false;
+			lock = false;
   } else {
       menu.style.display = "block";
-      lockedcontrols = true;
+			lock = true;
   }
 	let notUpdated = [];
 	for (let i in players) notUpdated.push(i);
@@ -51,11 +51,7 @@ socket.on('players', data => {
 			me.mesh.position.set(x, y, z);
 			me.updateHealth(p.hp, p.score, x, y, z);
       coordinates.innerHTML = String(Math.floor(x)) + ", " + String(Math.floor(z)) + ", " +String(Math.floor(y));
-			if(p.score == 1) {
-      	kills.innerHTML = p.score + " kill";
-			} else {
-				kills.innerHTML = p.score + " kills";
-			}
+      kills.innerHTML = p.score;
       health.style.width = (p.hp / 2.5) + "%";
 		} else if (!players[p.id]) {
 			players[p.id] = new Player(p.x, p.y, p.z, 0xff7777);
