@@ -39,9 +39,8 @@ class Player {
 	constructor(x, y, z, color) {
 		this.mesh = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 100, 100),
-      new THREE.MeshPhongMaterial({color: color, shininess: 25, specular: 0xffffff, emissive: 0x0, roughness: 10})
+      new THREE.MeshPhongMaterial({color: color, shininess: 25, specular: 0xffffff, emissive: 0x0})
 		);
-
 		this.mesh.castShadow = true;
 		this.mesh.position.set(x, y, z);
 		scene.add(this.mesh);
@@ -54,7 +53,9 @@ class Player {
       new THREE.SpriteMaterial({map: this.texture})
     );
     this.healthbar.position.set(x, y, z + 1);
-    scene.add(this.healthbar);
+		if(color != "#66ff66") {
+    	scene.add(this.healthbar);
+		}
     this.ctx = canvas.getContext('2d');
     this.ctx.textAlign = "center";
     this.ctx.font = "50px Arial";

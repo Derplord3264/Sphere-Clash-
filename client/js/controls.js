@@ -55,7 +55,11 @@ canvas.addEventListener('touchmove', e => {
     socket.emit('angle', angle.z);
     if (angle.x < 0) angle.x = 0;
     if (angle.x > Math.PI) angle.x = Math.PI;
-    camera.position.set(x, y, z);
+    camera.position.set(
+			x - Math.sin(angle.z) * Math.sin(angle.x) * distance,
+			y - Math.cos(angle.z) * Math.sin(angle.x) * distance,
+			z + Math.cos(angle.x) * distance
+		);
     camera.rotation.set(0.8, 0, 0);
     camera.rotation.x = angle.x;
     camera.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), -angle.z);
@@ -147,14 +151,18 @@ document.addEventListener('mousemove', e => {
 			angle.z += e.movementX / (sensitivity * 50);
 			angle.x -= e.movementY / (sensitivity * 50);    
 		} else {
-			angle.z += e.movementX / (sensitivity * 10);
-			angle.x -= e.movementY / (sensitivity * 10);
+			angle.z += e.movementX / (sensitivity * 5);
+			angle.x -= e.movementY / (sensitivity * 5);
   	}
 	}
   socket.emit('angle', angle.z);
   if (angle.x < 0) angle.x = 0;
   if (angle.x > Math.PI) angle.x = Math.PI;
-  camera.position.set(x, y, z);
+  camera.position.set(
+    x - Math.sin(angle.z) * Math.sin(angle.x) * distance,
+    y - Math.cos(angle.z) * Math.sin(angle.x) * distance,
+    z + Math.cos(angle.x) * distance
+  );
   camera.rotation.set(0.8, 0, 0);
   camera.rotation.x = angle.x;
   camera.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), -angle.z);

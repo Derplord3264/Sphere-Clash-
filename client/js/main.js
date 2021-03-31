@@ -1,9 +1,10 @@
 const socket = io();
 let id;
+var lock = true;
 socket.on('id', i => (id = i));
 
 let [x, y, z] = [0, 0, 0];
-const me = new Player(0, 0, 0, "transparent");
+const me = new Player(0, 0, 0, "#66ff66");
 
 let oof = new Audio("assets/die.wav");
 
@@ -47,7 +48,11 @@ socket.on('players', data => {
 	for (const p of data) {
 		if (p.id == id) {
 			({ x, y, z } = p);
-			camera.position.set(x, y, z);
+			camera.position.set(
+				x - Math.sin(angle.z) * Math.sin(angle.x) * distance,
+				y - Math.cos(angle.z) * Math.sin(angle.x) * distance,
+				z + Math.cos(angle.x) * distance
+			);
 			me.mesh.position.set(x, y, z);
 			me.updateHealth(p.hp, p.score, x, y, z);
       coordinates.innerHTML = String(Math.floor(x)) + ", " + String(Math.floor(z)) + ", " +String(Math.floor(y));

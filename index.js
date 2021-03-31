@@ -53,7 +53,7 @@ io.on('connection', socket => {
 
 		b.sx = Math.sin(a.z) * Math.sin(a.x);
 		b.sy = Math.cos(a.z) * Math.sin(a.x);
-		b.sz = 0 - Math.cos(a.x) * 1;
+		b.sz = 0 - Math.cos(a.x);
     p.ready = false;
     setTimeout(() => p.ready = true, 50);
 	});
