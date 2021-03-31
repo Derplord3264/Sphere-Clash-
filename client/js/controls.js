@@ -2,6 +2,29 @@ const keystate = [];
 const angle = { z: 0, x: Math.PI / 2 };
 var sensitivity = 50;
 var aim = false;
+
+document.onkeydown = function(event) {
+  var x = event.which || event.keyCode;
+  if(x == 191) {
+    chat();
+  }
+}
+
+socket.on("cm", function(cm) {
+  navigator.vibrate(200, 250);
+  document.getElementById("chats").innerHTML += "<br>" + cm;
+});
+
+function chat() {
+  var x = event.which || event.keyCode;
+  var mes = prompt("Enter your message")
+  if(!mes.startsWith("<") || mes == " " || mes == "" || mes == null || mes == false) {
+    if(x == 191) {
+      socket.emit("m", socket.id + ": " + mes);
+    }
+  }
+}
+
 window.addEventListener('keydown', e => {
   e.preventDefault();
   if (!keystate[e.keyCode]) {
@@ -119,6 +142,8 @@ function push() {
 
   socket.emit('move', { angle: angle.z + moveAngle, speed: speed, jump });
 }
+
+
 
 document.getElementById("Playbutton").addEventListener('click', e => {
   e.preventDefault();

@@ -98,4 +98,4 @@ class Bullet {
 		this.mesh.position.set(x, y, z);
 		scene.add(this.mesh);
   }
-}
+}w

@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const serv = require('http').Server(app);
+var Filter = require('bad-words'),
+    filter = new Filter();
 
 app.use('/', express.static(__dirname + '/client/'));
 
@@ -61,6 +63,10 @@ io.on('connection', socket => {
 	socket.on('disconnect', () => {
 		delete players[id];
 	});
+	socket.on("m", function(mes) {
+    socket.broadcast.emit("cm", filter.clean(mes));
+    socket.emit("cm", filter.clean(mes));
+  });
 });
 
 function update() {
@@ -83,7 +89,7 @@ function update() {
 			}
 		}
 		p.landed = landed;
-		if (!p.landed) p.sz -= 0.0075;
+		if (!p.landed) p.sz -= 0.006;
 		else p.sz = 0;
 
 		for (const i in p.bullets) {
@@ -104,7 +110,6 @@ function update() {
           if(target.hp <= 0) {
             target.reSpawn();
             io.emit("oof", target);
-            console.log(p);
             p.score++;
           }
           break;

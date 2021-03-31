@@ -30,6 +30,25 @@ class Floor {
 		}
 		return false;
 	}
+	xycollide(player) {
+		if (player.x + player.w / 2 > this.x && player.x - player.w / 2 < this.x) {
+			if (
+				player.y + player.w / 2 > this.y &&
+				player.y - player.w / 2 < this.y
+			) {
+				if (
+					player.z + player.w / 2 >= this.z &&
+					player.z - player.w / 2 <= this.z
+				) {
+						if(player.x > this.x){
+							player.x = this.x + this.h / 2 + player.w / 2;
+							return true;
+						} else player.x = this.x - this.h / 2 - player.w / 2;
+				}
+			}
+		}
+		return false;
+	}
 }
 
 class Player {
