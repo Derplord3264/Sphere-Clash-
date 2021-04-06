@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const serv = require('http').Server(app);
-var Filter = require('bad-words'),
-    filter = new Filter();
+const Filter = require('bad-words');
+const filter = new Filter();
 
 app.use('/', express.static(__dirname + '/client/'));
 
-serv.listen(8080);
+serv.listen(1276);
 console.log('Server started.');
 
 const io = require('socket.io')(serv);
@@ -37,7 +37,7 @@ io.on('connection', socket => {
 		const y = Math.cos(data.angle) * data.speed;
 		if (p.landed && data.jump) {
 			p.sz += 0.5;
-			p.landed = false;
+			p.landed = false;	
 		}
 
 		p.sx = x;
@@ -146,5 +146,3 @@ setInterval(() => {
 	update();
 	send();
 }, 1000 / 300);
-
-

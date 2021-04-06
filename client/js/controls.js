@@ -1,6 +1,5 @@
 const keystate = [];
 const angle = { z: 0, x: Math.PI / 2 };
-var sensitivity = 50;
 var aim = false;
 
 document.onkeydown = function(event) {
@@ -16,17 +15,20 @@ socket.on("cm", function(cm) {
 });
 
 function chat() {
-  var x = event.which || event.keyCode;
+	var username = document.getElementById("username").value;
+	if(username == "" || username == null) {
+		username = "Anonymous";
+	}
+  var x = event.which	 || event.keyCode;
   var mes = prompt("Enter your message")
   if(!mes.startsWith("<") || mes == " " || mes == "" || mes == null || mes == false) {
     if(x == 191) {
-      socket.emit("m", socket.id + ": " + mes);
+      socket.emit("m", username + ": " + mes);
     }
   }
 }
 
 window.addEventListener('keydown', e => {
-  e.preventDefault();
   if (!keystate[e.keyCode]) {
     keystate[e.keyCode] = true;
     push();
@@ -34,7 +36,6 @@ window.addEventListener('keydown', e => {
 });
 
 window.addEventListener('keyup', e => {
-  e.preventDefault();
   delete keystate[e.keyCode];
   push();
 });
@@ -130,7 +131,7 @@ function push() {
 			camera.updateProjectionMatrix();
 		}else if (!keystate[81] && aim) {
 			aim = false;
-			camera.fov = 60;
+			camera.fov = 100;
 			camera.updateProjectionMatrix();
 		}
 
@@ -152,10 +153,12 @@ document.getElementById("Playbutton").addEventListener('click', e => {
 
 document.getElementById("Settingsbutton").addEventListener('click', e => {
   if (confirm("Are you sure you want to change settings, the page will reload") == true) {
-    var answer = prompt("Graphics quality? (more than 100 will reduce FOV. default 100)");
+    var answer = prompt("Graphics quality? (more than 100 will cause rendering issues. default 100)");
     Cookies.set("resolution", answer);
     var answer = prompt("Shadow quality? (default 100)");
     Cookies.set("shadowresolution", answer);
+    var answer = prompt("Sensitivity? (default 50)");
+    Cookies.set("sensitivity", answer);
     location.reload();
   }
 });
@@ -173,11 +176,11 @@ document.addEventListener('mousemove', e => {
   e.preventDefault();
 	if(!lock) {
 		if(aim) {
-			angle.z += e.movementX / (sensitivity * 50);
-			angle.x -= e.movementY / (sensitivity * 50);    
+			angle.z += e.movementX / 50 * (sensitivity / 3000);
+			angle.x -= e.movementY / 50  * (sensitivity / 3000); 
 		} else {
-			angle.z += e.movementX / (sensitivity * 5);
-			angle.x -= e.movementY / (sensitivity * 5);
+			angle.z += e.movementX / 50 * (sensitivity / 500);
+			angle.x -= e.movementY / 50 * (sensitivity / 500);
   	}
 	}
   socket.emit('angle', angle.z);

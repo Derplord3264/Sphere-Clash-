@@ -4,6 +4,7 @@ const canvas = document.getElementById('gc');
 const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
 const distance = 0;
 var shadowresolution = 100;
+var sensitivity = 50;
 var resolution = 100;
 if(Cookies.get("resolution") == undefined) {
   Cookies.set("resolution", 100);
@@ -14,6 +15,11 @@ if(Cookies.get("shadowresolution") == undefined) {
   Cookies.set("shadowresolution", 100);
 } else {
   shadowresolution = parseInt(Cookies.get("shadowresolution"));
+}
+if(Cookies.get("sensitivity") == undefined) {
+  Cookies.set("sensitivity", 50);
+} else {
+  sensitivity = parseInt(Cookies.get("sensitivity"));
 }
 renderer.setPixelRatio((window.devicePixelRatio / 50) * resolution);
 renderer.setClearColor(0x00bfff);
@@ -98,4 +104,4 @@ class Bullet {
 		this.mesh.position.set(x, y, z);
 		scene.add(this.mesh);
   }
-}w
+}

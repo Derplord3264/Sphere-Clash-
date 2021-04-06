@@ -35,7 +35,7 @@
 	opacity: 0.5;
 	width: 25%;
 	height: 25%;
-	text-align: center;
+	text-align: left;
 }
 
 #kills {
@@ -47,6 +47,19 @@
   font-weight: bolder;
   width: 100%;
   text-align: right;
+  height: 25px;
+  z-index: 99998; 
+}
+
+#fps {
+  position: absolute;
+  margin: auto;
+  top: 25px;
+  left: 25px;
+  font-size: 50px;
+  font-weight: bolder;
+  width: 100%;
+  text-align: left;
   height: 25px;
   z-index: 99998; 
 }
@@ -111,6 +124,18 @@ canvas{
 
 #Settingsbutton {
   background-color: transparent;
+  border: 10px solid rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  width: 30%;
+  font-size: 25px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 900;
+  padding: 10px;
+  z-index: 999999;
+}
+
+#username {
+	background-color: transparent;
   border: 10px solid rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   width: 30%;

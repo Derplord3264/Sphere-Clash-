@@ -6,19 +6,21 @@
   </head>
   <body>
     <canvas id="gc"></canvas>
-    <div id="menu"><h1>Cubic War</h1><button id="Playbutton">Play!</button><br><br><button id="Settingsbutton">Settings</button></div>
+    <div id="menu"><h1>Cubic War</h1><input id="username" placeholder="Username"><br><br><button id="Playbutton">Play!</button><br><br><button id="Settingsbutton">Settings</button></div>
     <div id="health"></div>
     <div id="health-full"></div>
     <div id="coordinates">0, 0, 0</div>
     <div id="kills">0</div>
+    <div id="fps">0</div>
 		<div id="chats">slash ( / ) to chat</div>
     <img src="assets/crosshair.png" id="crosshair">
     <script src="socket.io/socket.io.js"></script>
+		<script src="js/Jquery.js"></script>
     <script src="js/cookie.js"></script>
     <script src="js/three/three.min.js"></script>
     <script src="js/things.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/stats.min.js"></script>
+    <script src="js/stats.js"></script>
     <script src='js/controls.js'></script>
   </body>
 </html>
